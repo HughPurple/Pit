@@ -1,0 +1,34 @@
+1. oc 和 swift 类型转换确定正确，使用 as? 转换为可选，直接 as 会导致 crash
+2. oc 代码中如果返回 nil，那么必须添加 _Nullable，否则在 swift 中必定 crash
+3. Realm 的 Object 子类修改成员后需升级数据库
+4. 需要及时的更新时不要完全相信 Notification
+5. YYLabel 设置 lineBreakMode 时需要注意统一，Style/setLineBreakMode 等
+6. 项目中存在对某个库的封装时，一定要使用封装后的方法，避免不一致
+7. Realm 升级后，如果使用旧版会导致 Exception
+8. UISwitch 不好设置关闭状态，通过添加一层与关闭状态具有相同背景色的 UIView 来覆盖，此时设置动态约束，可能会出现问题，尝试将 UIView 的约束放置UISwitch 之后
+9. UISwitch 无法设置大小，只能通过 scale 来设置，如 switchView.transform = CGAffineTransform(scaleX: width / 51.0, y: height / 31.0)
+10. UIViewController 的 init 方法晚于 viewDidLoad 执行，是因为 init 中使用了 ViewController 的 view，当使用 view 时，如果没有创建则会执行loadView 创建。
+11. 代理？具体做事的实例，协议？可以做哪些事
+12. UIView 不接收事件，但其子控件、被其覆盖的控件需要接收，则可以重写 hitTest，当 super.hitText 返回它时，则返回 nil，其他情况正常返回
+13. defer 是退出大括号时调用，多个时按逆序调用，其中使用的值是大括号结束时值的状态，因此不想改变时需要提前存储
+14. Xcode 打断点，有的时候无法停止，原因是改动导致编译生成的 debug 信息不一致，可以执行 cleanall，重新运行
+15. iOS 安装后无法信任开发者，或者在设置中点击后无反应，可以卸载后重启再安装，或者使用 4G 网络，或者关掉代理
+16. h5 授权登录返回出现未登录成功：是否存在返回后再次启动授权页；真机和模拟器的区别；未更新 token/sessionid
+17. UICollectionView 显示多行时，最后一行的每个 cell 将采用 minimumInteritemSpacing 做为分隔，因此可以在真实的 numberOfItems 的基础上加 1 来解决，因为官方代码中 sectionInset 的优先级高于 minimumInteritemSpacing
+18. Charles 无法抓包，试着关闭 Charles 和模拟器，然后先启动 Charles，在启动模拟器
+19. Cookie 丢失是由于系统保存不及时，通常会有 10s 的延迟持久化时间（通知+缓存）?
+20. UICollectionView 和 UITableView 更新不及时，reloadData()、layoutIfNeeded() 的顺序以及主线程导致
+21. animate 执行移动不到指定位置，可能是由于 frame 和 autolayout 相互影响，可以采用外部套 frame 的 view，内部使用 autolayout，对外部 view 进行动画来达到效果
+22. 采用 Pan 手势而不是 scrollView 的 contentOffset 来进行移动，手势结束时可以立即移动，而不会出现卡顿
+23. 手势冲突时，依使用场景决定手势代理 gestureRecognizer(_:shouldRecognizeSimultaneouslyWith:) 的返回值
+24. 动画期间设置可交互后，还要注意 alpha 的值，解决0的时候控件会从响应链从移除
+25. 使用延时的方式等待布局完成，可以添加控件到正确位置
+26. 添加阴影时，先加边框，再画阴影，设置背景色，maskToRounds
+27. iOS 13上给 label 添加渐变时，需要先添加渐变，避免渐变把文案遮挡
+28. 设置 anchorPoint 后需要重新设置 frame，才能保证控件安装指定的 anchorPoint 做动画而不改变位置
+29. Charts 设置 sapceMin/spaceMax 避免显示半根柱子
+30. Command PhaseScriptExecution failed with a nonzero exit code 导致无法编译
+  1. 法一：pod update & pod install
+  2. 法二：keychain access -> right click on login -> lock & unlock again -> clear Xcode project
+31. 富文本设置 paragraphStyle 的 alignment 为 justified，可以左右对齐
+32. 富文本通过 kern 设置字符间距
